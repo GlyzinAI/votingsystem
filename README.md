@@ -110,7 +110,6 @@ Create | POST | `{URL}/admin/restaurants` | Create Body | Only Admin
 ```
 
 ## Dishes API
-Replace `{URL}` with your url to page.
 
 ### URL Pages 
 
@@ -143,7 +142,6 @@ Create | POST | `{URL}/admin/restaurants/{restID}/dishes` | Create Body | Only A
 ```
 
 ## Vote API
-
 
 ### URL Pages 
 
