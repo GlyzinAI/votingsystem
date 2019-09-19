@@ -31,6 +31,7 @@ Username | Password | Role
 -------- | -------- | ----
 admin@gmail.com | admin | ADMIN
 user@gmail.com | password | USER
+
 After this commands you will start hosting website on page `localhost:8080/voter`
 
 # API.
