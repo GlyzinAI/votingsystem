@@ -76,7 +76,6 @@
                         <containerId>tomcat9x</containerId>
                         <systemProperties>
                             <file.encoding>UTF-8</file.encoding>
-                            <spring.profiles.active>tomcat</spring.profiles.active>
                         </systemProperties>
                     </container>
                     <configuration>
@@ -94,7 +93,7 @@
                             <artifactId>votingsystem</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>${project.build.finalName}</context>
+                                <context>/voter</context>
                             </properties>
                         </deployable>
                     </deployables>
