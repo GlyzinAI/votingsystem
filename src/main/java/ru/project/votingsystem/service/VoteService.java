@@ -1,6 +1,7 @@
 package ru.project.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.project.votingsystem.model.Vote;
 import ru.project.votingsystem.repository.VoteRepository;
@@ -45,12 +46,8 @@ public class VoteService {
         return voteRepository.findByUserIdAndDate(userId, LocalDate.now());
     }
 
-    /*public List<Vote> getAll() {
-        return voteRepository.findAll(new Sort(Sort.Direction.ASC, "date"));
-    }*/
-
     public List<Vote> getAll() {
-        return voteRepository.findAll();
+        return voteRepository.findAll(new Sort(Sort.Direction.ASC, "date"));
     }
 
     public List<Vote> getTodayVotes() {
