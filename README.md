@@ -171,7 +171,7 @@ Create | POST | `{URL}/admin/restaurants/{restID}/dishes` | Create Body | Only A
 Description | Method | URL | Body | User
 ----------- | ------ | --- | ---- | ----
 Show personal today vote | GET | `{URL}/votes` | none | Authorized
-Vote for the restaurant| POST | `{URL}/votes` | none | Authorized
+Vote for the restaurant| POST | `{URL}/votes/{restID}` | none | Authorized
 Get All  |GET |`{URL}/admin/votes` | none |Only Admin
 Get  | GET | `{URL}/admin/votes/{ID}` | none | Only Admin
 Get All today | GET | `{URL}/admin/votes/today` | none |Only Admin

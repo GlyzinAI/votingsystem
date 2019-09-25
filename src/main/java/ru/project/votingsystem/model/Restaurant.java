@@ -14,7 +14,7 @@ public class Restaurant extends AbstractNamedEntity {
     @JsonIgnore
     private List<Dish> dishes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     @OrderBy("date DESC")
     private List<Vote> votes;
 

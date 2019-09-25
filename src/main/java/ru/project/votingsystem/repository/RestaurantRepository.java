@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-    @Query("SELECT r FROM Restaurant r ORDER BY r.name")
+    @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes ORDER BY r.name")
     List<Restaurant> getAll();
 
     @Override
