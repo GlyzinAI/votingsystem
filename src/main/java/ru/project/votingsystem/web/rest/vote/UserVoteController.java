@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.project.votingsystem.AuthorizedUser;
 import ru.project.votingsystem.model.Vote;
-import ru.project.votingsystem.service.vote.VoteService;
+import ru.project.votingsystem.service.VoteService;
 import ru.project.votingsystem.to.VoteTo;
 
 import java.net.URI;

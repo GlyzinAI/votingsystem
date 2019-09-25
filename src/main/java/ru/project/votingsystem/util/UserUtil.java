@@ -18,11 +18,6 @@ public class UserUtil {
         return user;
     }
 
-    public static User prepareToGet(User user) {
-        user.setPassword("{noop}" + user.getPassword());
-        return user;
-    }
-
     public static UserTo createNewFromUser(User user) {
         return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }

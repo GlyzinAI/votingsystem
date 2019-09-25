@@ -24,5 +24,15 @@ public class ValidationUtil {
             throw new NotFoundException("Not found entity with " + msg);
         }
     }
+
+    public static Throwable getRootCause(Throwable t) {
+        Throwable result = t;
+        Throwable cause;
+
+        while (null != (cause = result.getCause()) && (result != cause)) {
+            result = cause;
+        }
+        return result;
+    }
 }
 

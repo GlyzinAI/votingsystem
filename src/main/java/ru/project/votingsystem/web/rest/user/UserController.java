@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.project.votingsystem.AuthorizedUser;
 import ru.project.votingsystem.model.User;
-import ru.project.votingsystem.service.user.UserService;
+import ru.project.votingsystem.service.UserService;
 import ru.project.votingsystem.to.UserTo;
 
 import javax.validation.Valid;
@@ -17,7 +17,6 @@ import java.net.URI;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-import static ru.project.votingsystem.util.UserUtil.createNewFromTO;
 import static ru.project.votingsystem.util.UserUtil.createNewFromUser;
 
 @RestController
@@ -53,14 +52,14 @@ public class UserController {
     public void update(@RequestBody UserTo userTo) {
         int id = ((AuthorizedUser) getContext().getAuthentication().getPrincipal()).getId();
         log.info("update user {}", id);
-        userService.update(userTo, id);
+        userService.update(userTo);
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> register(@Valid @RequestBody UserTo user) {
+    public ResponseEntity<User> register(@Valid @RequestBody User user) {
         log.info("register new user");
-        User created = userService.create(createNewFromTO(user));
+        User created = userService.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.project.votingsystem.model.Dish;
-import ru.project.votingsystem.service.dish.DishService;
+import ru.project.votingsystem.service.DishService;
 
 import javax.validation.Valid;
 import java.net.URI;

@@ -16,13 +16,11 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Override
     Dish save(Dish dish);
 
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id = ?1 ORDER BY d.name")
     List<Dish> getAllByRestaurantId(int restaurantId);
 
     @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.date = current_date")
     List<Dish> getDishesWithRestaurantToday();
-
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id =?1 AND d.date = current_date")
-    List<Dish> getDishesByRestaurantId(int restaurantId);
 
     Dish getByIdAndRestaurantId(int dishId, int restaurantId);
 

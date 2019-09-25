@@ -1,6 +1,9 @@
 # Voting System 
 (REST service to vote for restaurants)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d0fa5de3eee74ec6876edd92e4fc2f4e)](https://www.codacy.com/manual/GlyzinAI/votingsystem?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GlyzinAI/votingsystem&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/GlyzinAI/votingsystem.svg?branch=master)](https://travis-ci.org/GlyzinAI/votingsystem)
+
 <h2>Постановка задачи:</h2>
 
 Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
@@ -58,9 +61,12 @@ Register Profile | POST | `{URL}/users/register` | Register Body | Not Authorize
 {
     "name": "New User",
     "email": "newUser@gmail.com",
-    "password": "12345"
+    "password": "12345",
+    "roles": [
+            "ROLE_USER"
+        ]
 }
-```
+``` 
 
 #### Update Body
 ```json
@@ -68,7 +74,10 @@ Register Profile | POST | `{URL}/users/register` | Register Body | Not Authorize
     "id"  : 102,
     "name": "Anton",
     "email": "newmail@gmail.com",
-    "password": "newPass"
+    "password": "newPass",
+    "roles": [
+                "ROLE_USER"
+            ]
 }
 ```
 
@@ -76,8 +85,22 @@ Register Profile | POST | `{URL}/users/register` | Register Body | Not Authorize
 ```json
 {
     "name": "Nikita",
-    "email": "createuser@gmail.com",
-    "password": "newPass"
+    "email": "nikita@gmail.com",
+    "password": "12345",
+    "roles": [
+            "ROLE_USER"
+        ]
+}
+``` 
+or
+```json
+{
+    "name": "Nikita",
+    "email": "nikita@gmail.com",
+    "password": "12345",
+    "roles": [
+            "ROLE_USER", "ROLE_ADMIN"
+        ]
 }
 ```
 

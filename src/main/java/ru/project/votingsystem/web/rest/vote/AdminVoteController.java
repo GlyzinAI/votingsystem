@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.project.votingsystem.service.vote.VoteService;
+import ru.project.votingsystem.service.VoteService;
 import ru.project.votingsystem.to.VoteTo;
 
 import java.util.List;

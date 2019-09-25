@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Override
     Optional<User> findById(Integer id);
 
-    @Query("SELECT u FROM User u  ORDER BY u.name")
+    @Query("SELECT u FROM User u ORDER BY u.name")
     List<User> getAll();
 
     User getByEmail(String email);

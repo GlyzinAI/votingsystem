@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.project.votingsystem.service.restaurant.RestaurantService;
+import ru.project.votingsystem.service.RestaurantService;
 import ru.project.votingsystem.to.RestaurantTo;
 
 import java.util.List;

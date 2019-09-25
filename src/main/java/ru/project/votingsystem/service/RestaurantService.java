@@ -1,6 +1,7 @@
-package ru.project.votingsystem.service.restaurant;
+package ru.project.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.project.votingsystem.model.Dish;
@@ -17,18 +18,17 @@ import static ru.project.votingsystem.util.RestaurantUtil.updateNewFromTo;
 import static ru.project.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class RestaurantServiceImpl implements RestaurantService {
+public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final DishRepository dishRepository;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, DishRepository dishRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository, DishRepository dishRepository) {
         this.restaurantRepository = restaurantRepository;
         this.dishRepository = dishRepository;
     }
 
-    @Override
     public List<RestaurantTo> getWithDailyDishes() throws NotFoundException {
         List<Dish> dishes = dishRepository.getDishesWithRestaurantToday();
         List<Restaurant> restaurantWithDailyDishes = new ArrayList<>();
@@ -58,28 +58,30 @@ public class RestaurantServiceImpl implements RestaurantService {
         return createNewFromRestaurant(restaurantWithDailyDishes);
     }
 
-    @Override
     public List<Restaurant> getAll() {
         return restaurantRepository.getAll();
     }
 
-    @Override
+    @CacheEvict(value = "dishes", allEntries = true)
     public void delete(int restaurantId) throws NotFoundException {
         checkNotFoundWithId(restaurantRepository.delete(restaurantId) != 0, restaurantId);
     }
 
-    @Override
+    @CacheEvict(value = "dishes", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 
-    @Override
+    public Restaurant update(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
+
+    @CacheEvict(value = "dishes", allEntries = true)
     public Restaurant update(RestaurantTo restaurantTo, Restaurant restaurant) {
         return restaurantRepository.save(updateNewFromTo(restaurant, restaurantTo));
     }
 
-    @Override
     public Restaurant get(int restaurant1Id) {
         return checkNotFoundWithId(restaurantRepository.findById(restaurant1Id).orElse(null), restaurant1Id);
     }

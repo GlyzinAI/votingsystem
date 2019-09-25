@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.project.votingsystem.model.User;
-import ru.project.votingsystem.service.user.UserService;
+import ru.project.votingsystem.service.UserService;
 import ru.project.votingsystem.to.UserTo;
 
 import javax.validation.Valid;
@@ -53,8 +53,7 @@ public class AdminController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody UserTo userTo) {
         log.info("update user {}", userTo.getName());
-        int id = userTo.getId();
-        userService.update(userTo, id);
+        userService.update(userTo);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

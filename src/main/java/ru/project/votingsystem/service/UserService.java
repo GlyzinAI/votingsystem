@@ -1,6 +1,10 @@
-package ru.project.votingsystem.service.user;
+package ru.project.votingsystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,56 +20,60 @@ import ru.project.votingsystem.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static ru.project.votingsystem.util.UserUtil.prepareToGet;
 import static ru.project.votingsystem.util.UserUtil.prepareToSave;
 import static ru.project.votingsystem.util.ValidationUtil.checkNotFound;
 import static ru.project.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
-public class UserServiceImpl implements UserService, UserDetailsService {
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         return userRepository.save(prepareToSave(user, passwordEncoder));
     }
 
-    @Override
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int userId) throws NotFoundException {
         checkNotFoundWithId(userRepository.delete(userId) != 0, userId);
     }
 
-    @Override
     public User get(int userId) throws NotFoundException {
         return checkNotFoundWithId(userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException("Not found user with id = " + userId)), userId);
     }
 
-    @Override
     public User getByEmail(String email) throws NotFoundException {
         Assert.notNull(email, "email must not be null");
         return checkNotFound(userRepository.getByEmail(email), "email=" + email);
     }
 
-    @Override
+    @Cacheable("users")
     public List<User> getAll() {
         return userRepository.getAll();
     }
 
-    @Override
-    public void update(UserTo userTo, int userId) {
+    @CacheEvict(value = "users", allEntries = true)
+    public void update(User user) {
+        Assert.notNull(user, "user must not be null");
+        userRepository.save(prepareToSave(user, passwordEncoder));
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    public void update(UserTo userTo) {
         Assert.notNull(userTo, "user must not be null");
-        User user = get(userId);
+        User user = get(userTo.getId());
         userRepository.save(prepareToSave(UserUtil.updateFromTo(user, userTo), passwordEncoder));
     }
 
@@ -75,7 +83,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
-        prepareToGet(user);
         return new AuthorizedUser(user);
     }
 }
